@@ -1,6 +1,6 @@
 # nanoPHP
 
-minimalistic couchdb driver for PHP it's intended to be exactly the same as
+minimalistic couchdb driver for PHP >5.3 it's intended to be exactly the same as
 https://github.com/dscape/nano but in PHP
 
 `nano` features:

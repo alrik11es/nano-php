@@ -9,4 +9,9 @@ class nano{
 		$this->config['url'] = $url;
 		$this->db = new NanoDB($this);
 	}
+
+	function use($db_name){
+		$this->config['db'] = $db_name;
+		return new NanoDocument($this)
+	}
 }
