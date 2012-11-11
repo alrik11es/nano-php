@@ -2,12 +2,14 @@
 
 class NanoDB{
 
-	function __construct(){
-		
+	private $nano;
+
+	function __construct($nano){
+		$this->nano = $nano;
 	}
 
-	function create($db_name){
-		return true;
+	function create($db_name, $callback){
+		return relax('{db: '.$db_name.', method: "PUT"}', $callback);
 	}
 
 	function get($db_name){
@@ -24,7 +26,7 @@ class NanoDB{
 	/**
 	 *	Lists all the databases in couchdb
 	 **/
-	function list(){
+	function listdb(){
 
 	}
 
@@ -32,7 +34,7 @@ class NanoDB{
 
 	}
 
-	function compact($source, $target, $options = null){
+	function replicate($source, $target, $options = null){
 
 	}
 
@@ -44,9 +46,8 @@ class NanoDB{
 
 	}
 
-	function use($db_name){
-		$this->config['db'] = $db_name;
-		return new NanoDocument($this)
+	function usedb($db_name){
+		$this->nano->use($db_name);
 	}
 
 	function scope($db_name){

@@ -618,7 +618,5 @@ where `list_doc_params` is the test name.
 * bugs: <http://github.com/alrik11es/nanoPHP/issues>
 * build: [![build status](https://secure.travis-ci.org/alrik11es/nanoPHP.png)](http://travis-ci.org/alrik11es/nanoPHP)
 
-`(oo)--',-`
-
 [1]: http://getcomposer.org/
 [2]: http://github.com/alrik11es/nanoPHP/issues
