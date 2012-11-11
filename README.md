@@ -1,7 +1,7 @@
 # nanoPHP
 
 minimalistic couchdb driver for PHP >5.3 it's intended to be exactly the same as
-https://github.com/dscape/nano but in PHP
+https://github.com/alrik11es/nanoPHP but in PHP
 
 `nano` features:
 
@@ -613,32 +613,12 @@ where `list_doc_params` is the test name.
         __/       /
        /__.|_|-|_|     cannes est superb
 
-* code: `git clone git://github.com/dscape/nano.git`
-* home: <http://github.com/dscape/nano>
-* bugs: <http://github.com/dscape/nano/issues>
-* build: [![build status](https://secure.travis-ci.org/dscape/nano.png)](http://travis-ci.org/dscape/nano)
+* code: `git clone git://github.com/alrik11es/nanoPHP.git`
+* home: <http://github.com/alrik11es/nanoPHP>
+* bugs: <http://github.com/alrik11es/nanoPHP/issues>
+* build: [![build status](https://secure.travis-ci.org/alrik11es/nanoPHP.png)](http://travis-ci.org/alrik11es/nanoPHP)
 
-`(oo)--',-` in [caos][3]
+`(oo)--',-`
 
 [1]: http://getcomposer.org/
-[2]: http://github.com/dscape/nano/issues
-[3]: http://caos.di.uminho.pt/
-[4]: https://github.com/dscape/nano/blob/master/cfg/couch.example.js
-[follow]: https://github.com/iriscouch/follow
-[request]:  https://github.com/mikeal/request
-
-## license
-
-copyright 2011 nuno job <nunojob.com> (oo)--',--
-
-licensed under the apache license, version 2.0 (the "license");
-you may not use this file except in compliance with the license.
-you may obtain a copy of the license at
-
-    http://www.apache.org/licenses/license-2.0
-
-unless required by applicable law or agreed to in writing, software
-distributed under the license is distributed on an "as is" basis,
-without warranties or conditions of any kind, either express or implied.
-see the license for the specific language governing permissions and
-limitations under the license.
+[2]: http://github.com/alrik11es/nanoPHP/issues
