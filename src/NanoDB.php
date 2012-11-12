@@ -8,8 +8,11 @@ class NanoDB{
 		$this->nano = $nano;
 	}
 
-	function create($db_name, $callback){
-		return relax('{db: '.$db_name.', method: "PUT"}', $callback);
+	function create($db_name){
+		$opts = new stdClass();
+		$opts->db = $db_name;
+		$opts->method = 'PUT';
+		return new Relax($opts, $this->nano);
 	}
 
 	function get($db_name){
@@ -26,8 +29,12 @@ class NanoDB{
 	/**
 	 *	Lists all the databases in couchdb
 	 **/
-	function listdb(){
+	function list_dbs(){
+		$opts = new stdClass();
+		$opts->db = "_all_dbs";
+		$opts->method = 'GET';
 
+		return new relax($opts, $this->nano);
 	}
 
 	function compact($db_name, $design_name){

@@ -1,18 +1,20 @@
 <?php
 
 require 'NanoDB.php';
-
+require 'Relax.php';
+//require 'NanoDocument.php';
 
 class nano{
 
-	private $config = stdClass();
+	public $config;
 	public $db;
 	public $relax;
 
 	function __construct($url){
+		$this->config = new stdClass();
 		$this->config->url = $url;
 		$this->db = new NanoDB($this);
-		$this->relax = new Relax($this);
+		//$this->relax = new Relax($this);
 	}
 
 	function usedb($db_name){
