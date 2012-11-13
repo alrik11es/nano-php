@@ -12,18 +12,30 @@ class NanoDB{
 		$opts = new stdClass();
 		$opts->db = $db_name;
 		$opts->method = 'PUT';
-		return new Relax($opts, $this->nano);
+		
+		$relax = new Relax($opts, $this->nano);
+		return $relax->exec();
 	}
 
 	function get($db_name){
+		$opts = new stdClass();
+		$opts->db = $db_name;
+		$opts->method = 'GET';
 
+		$relax = new Relax($opts, $this->nano);
+		return $relax->exec();
 	}
 
 	/**
 	 *	Destroys $db_name
 	 **/
 	function destroy($db_name){
+		$opts = new stdClass();
+		$opts->db = $db_name;
+		$opts->method = 'DELETE';
 
+		$relax = new Relax($opts, $this->nano);
+		return $relax->exec();
 	}
 
 	/**
@@ -34,7 +46,8 @@ class NanoDB{
 		$opts->db = "_all_dbs";
 		$opts->method = 'GET';
 
-		return new relax($opts, $this->nano);
+		$relax = new Relax($opts, $this->nano);
+		return $relax->exec();
 	}
 
 	function compact($db_name, $design_name){
@@ -53,12 +66,12 @@ class NanoDB{
 
 	}
 
-	function usedb($db_name){
+	function use_db($db_name){
 		$this->nano->use($db_name);
 	}
 
 	function scope($db_name){
-		$this->use($db_name);
+		$this->use_db($db_name);
 	}
 
 	function request($options = null){
@@ -72,4 +85,21 @@ class NanoDB{
 	function dinosaur($options = null){
 		$this->request($options);
 	}
+
+	// Some reserved words methods are used in nano so here is the solution to implement methods as reserved keywords.
+	public function __call($func, $args)
+    {
+        switch ($func)
+        {
+            case 'list':
+                return $this->list_dbs();
+            break;
+            case 'use':
+                return $this->use_db((isset($args[0]))? $args[0]: null);
+            break;
+            default:
+                trigger_error("Call to undefined method ".__CLASS__."::$func()", E_USER_ERROR);
+            die ();
+        }
+    }
 }

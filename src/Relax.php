@@ -2,13 +2,20 @@
 
 class Relax{
 
+	public $value;
 	public $nano;
 	
 	function __construct($opts, $nano){
 		$this->nano = $nano;
 		$path = $this->nano->config->url.'/'.$opts->db;
 		$ch = curl_init($path);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $opts->method);
-		$retValue = curl_exec($ch);
+		$this->value = curl_exec($ch);
+		curl_close($ch);
+	}
+
+	public function exec(){
+		return $this->value;
 	}
 }

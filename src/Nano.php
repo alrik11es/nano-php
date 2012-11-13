@@ -8,13 +8,11 @@ class nano{
 
 	public $config;
 	public $db;
-	public $relax;
 
 	function __construct($url){
 		$this->config = new stdClass();
 		$this->config->url = $url;
 		$this->db = new NanoDB($this);
-		//$this->relax = new Relax($this);
 	}
 
 	function usedb($db_name){

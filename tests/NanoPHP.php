@@ -1,12 +1,21 @@
 <?php
 
 require '../src/Nano.php';
-class NanoPHPTest extends PHPUnit_Framework_TestCase
+class Test extends PHPUnit_Framework_TestCase
 {
     public function testDbCreate()
     {
        	$nano = new Nano('http://localhost:5984');
-       	$err = $nano->db->create('alice');
-       	$this->assertEquals($err, null, "Failed to create database");
+       	$result = $nano->db->create('alice');
+       	$result = json_decode($result);
+       	$this->assertEquals($result->ok, true, "Failed to create DB");
+    }
+
+    public function testDbDelete()
+    {
+       	$nano = new Nano('http://localhost:5984');
+       	$result = $nano->db->destroy('alice');
+       	$result = json_decode($result);
+       	$this->assertEquals($result->ok, true, "Failed to delete DB");
     }
 }
