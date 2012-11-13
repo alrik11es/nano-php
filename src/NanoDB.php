@@ -1,5 +1,4 @@
 <?php
-
 class NanoDB{
 
 	private $nano;
@@ -66,13 +65,13 @@ class NanoDB{
 
 	}
 
-	function use_db($db_name){
-		$this->nano->use($db_name);
+	/*function use_db($db_name){
+		$this->nano->use_db($db_name);
 	}
 
 	function scope($db_name){
 		$this->use_db($db_name);
-	}
+	}*/
 
 	function request($options = null){
 
@@ -94,8 +93,8 @@ class NanoDB{
             case 'list':
                 return $this->list_dbs();
             break;
-            case 'use':
-                return $this->use_db((isset($args[0]))? $args[0]: null);
+            case ('use' || 'scope'):
+                return $this->nano->use_db((isset($args[0]))? $args[0]: null);
             break;
             default:
                 trigger_error("Call to undefined method ".__CLASS__."::$func()", E_USER_ERROR);

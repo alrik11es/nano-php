@@ -1,7 +1,9 @@
 # nanoPHP
 
+[![Build Status](https://secure.travis-ci.org/alrik11es/nanoPHP.png?branch=Dev)](https://travis-ci.org/alrik11es/nanoPHP)
+
 minimalistic couchdb driver for PHP >5.3 it's intended to be exactly the same as
-https://github.com/alrik11es/nanoPHP but in PHP
+https://github.com/dscape/nano but in PHP (No callbacks here)
 
 `nano` features:
 
@@ -37,9 +39,9 @@ and to use it:
 $alice = $nano->db->use('alice');
 ```
 
-in this examples we didn't specify a `callback` function, the absence of a 
-callback means _"do this, ignore what happens"_.
-in `nano` the callback function receives always three arguments:
+in this examples we didn't specify a `result` from the returning value, the absence of a 
+result means _"do this, ignore what happens"_.
+in `nanoPHP` the returning value receives always three arguments:
 
 
 * `err` - the error, if any
@@ -66,6 +68,11 @@ $alice = $nano->use('alice');
 $rabbit = new stdClass(); // This is the standard empty class
 $rabbit->crazy = true;
 $result = $alice->insert($rabbit, 'rabbit');
+
+if(!isset($result->error)){
+  echo 'You have inserted the rabbit.<br/>';
+  echo $result->body;
+}
 
 ```
 
@@ -614,7 +621,6 @@ where `list_doc_params` is the test name.
 * code: `git clone git://github.com/alrik11es/nanoPHP.git`
 * home: <http://github.com/alrik11es/nanoPHP>
 * bugs: <http://github.com/alrik11es/nanoPHP/issues>
-* build: [![build status](https://secure.travis-ci.org/alrik11es/nanoPHP.png)](http://travis-ci.org/alrik11es/nanoPHP)
 
 [1]: http://getcomposer.org/
 [2]: http://github.com/alrik11es/nanoPHP/issues
