@@ -16,6 +16,7 @@ class Relax{
 	}
 
 	public function exec(){
+		// Errors need to be filtered
 		return $this->value;
 	}
 }

@@ -54,22 +54,19 @@ a simple but complete example using callbacks is:
 $nano = new Nano('http://localhost:5984');
 
 // clean up the database we created previously
-$nano->db->destroy('alice', function() {
-  // create a new database
-  $nano->db->create('alice', function() {
-    // specify the database we are going to use
-    $alice = $nano->use('alice');
-    // and insert a document in it
-    alice->insert({ crazy: true }, 'rabbit', function(err, body, header) {
-      if (err) {
-        console.log('[alice.insert] ', err.message);
-        return;
-      }
-      console.log('you have inserted the rabbit.')
-      console.log(body);
-    });
-  });
-});
+$nano->db->destroy('alice');
+
+// create a new database
+$nano->db->create('alice');
+
+// specify the database we are going to use
+$alice = $nano->use('alice');
+
+// and insert a document in it
+$rabbit = new stdClass(); // This is the standard empty class
+$rabbit->crazy = true;
+$result = $alice->insert($rabbit, 'rabbit');
+
 ```
 
 if you run this example(after starting couchdb) you will see:
@@ -85,17 +82,17 @@ you can also see your document in [futon](http://localhost:5984/_utils).
 
 configuring nano to use your database server is as simple as:
 
-``` js
-var server = require('nano')('http://localhost:5984')
-  , db     = server.use('foo')
+``` php
+$server = new Nano('http://localhost:5984');
+$server->use('foo');
   ;
 ```
 
 however if you don't need to instrument database objects you can simply:
 
-``` js
+``` php
 // nano parses the url and knows this is a database
-var db = require('nano')('http://localhost:5984/foo');
+$db = new Nano('http://localhost:5984/foo');
 ```
 
 you can also pass options to the require:
