@@ -8,8 +8,27 @@ class NanoDocument{
 		$this->nano = $nano;
 	}
 
-	function insert(){
-		echo 'Insertandoouuu';
+	function insert($doc, $params){
+		//var opts = {db: db_name, body: doc, method: "POST"};
+
+		$opts = new stdClass();
+		$opts->db = $this->nano->config->db;
+		$opts->doc_name = $params;
+		$opts->method = 'POST';
+
+		if($params === "string"){
+			$opts->doc_name = $params;
+		} else if ($params) {
+			if($params->doc_name) {
+				$opts->doc = $params->doc_name;
+				$opts->method = "PUT";
+				unset($params->doc_name);
+			}
+			$opts->params = $params;
+		}
+
+		$relax = new Relax($opts, $this->nano);
+		return $relax->exec();
 	}
 	
 	function destroy(){

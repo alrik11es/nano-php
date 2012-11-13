@@ -3,7 +3,8 @@
 [![Build Status](https://secure.travis-ci.org/alrik11es/nanoPHP.png?branch=Dev)](https://travis-ci.org/alrik11es/nanoPHP)
 
 minimalistic couchdb driver for PHP >5.3 it's intended to be exactly the same as
-https://github.com/dscape/nano but in PHP (No callbacks here)
+https://github.com/dscape/nano but in PHP (I'm avoiding the use of callbacks because
+I think PHP people doesn't need to mess with that).
 
 `nano` features:
 
@@ -65,7 +66,7 @@ $nano->db->create('alice');
 $alice = $nano->use('alice');
 
 // and insert a document in it
-$rabbit = new stdClass(); // This is the standard empty class
+$rabbit = new stdClass(); // This is the standard empty class could be one of your own classes
 $rabbit->crazy = true;
 $result = $alice->insert($rabbit, 'rabbit');
 
@@ -92,7 +93,6 @@ configuring nano to use your database server is as simple as:
 ``` php
 $server = new Nano('http://localhost:5984');
 $server->use('foo');
-  ;
 ```
 
 however if you don't need to instrument database objects you can simply:
@@ -100,13 +100,6 @@ however if you don't need to instrument database objects you can simply:
 ``` php
 // nano parses the url and knows this is a database
 $db = new Nano('http://localhost:5984/foo');
-```
-
-you can also pass options to the require:
-
-``` js
-// nano parses the url and knows this is a database
-var db = require('nano')('http://localhost:5984/foo');
 ```
 
 to specify further configuration options you can pass an object literal instead:
@@ -131,36 +124,34 @@ you can increase the size using `request_options` if this is problematic, and re
 
 ## database functions
 
-### nano.db.create(name, [callback])
+### nano->db->create(name)
 
 creates a couchdb database with the given `name`.
 
-``` js
-nano.db.create('alice', function(err, body) {
-  if (!err) {
-    console.log('database alice created!');
-  }
-});
+``` php
+$result = $nano->db->create('alice');
+if (!$result->err) {
+  echo ('database alice created!');
+}
 ```
 
-### nano.db.get(name, [callback])
+### nano->db->get(name)
 
 get informations about `name`.
 
-``` js
-nano.db.get('alice', function(err, body) {
-  if (!err) {
-    console.log(body);
-  }
-});
+``` php
+$result = $nano->db->get('alice');
+if (!$result->err) {
+  echo ($result->body);
+}
 ```
 
-### nano.db.destroy(name, [callback])
+### nano->db->destroy(name)
 
 destroys `name`.
 
-``` js
-nano.db.destroy('alice');
+``` php
+$nano->db->destroy('alice');
 ```
 
 even though this examples looks sync it is an async function.
