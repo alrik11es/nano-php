@@ -8,21 +8,29 @@ class NanoDocument{
 		$this->nano = $nano;
 	}
 
-	function insert($doc, $params = null){
+	function insert($doc, $params = false){
 		//var opts = {db: db_name, body: doc, method: "POST"};
 
-		$opts = new stdClass();
+		$opts = new OptionsClass();
 		$opts->db = $this->nano->config->db;
 		$opts->body = $doc;
 		$opts->method = 'POST';
+		$opts->params = new stdClass();
+
+		if(is_array($params)){
+			$params = Nano::arrayToObject($params);
+			if(!$params)
+				trigger_error("A string, multidimensional array or an object in params only", E_USER_ERROR);
+		}
 
 		if(is_string($params)){
-			$opts->doc_name = $params;
-		} else if ($params) {
-			if($params->doc_name) {
-				$opts->doc = $params->doc_name;
+			$opts->params->doc_name = $params;
+		}
+
+		if ($params) {
+			if(isset($opts->params->doc_name)) {
+				$opts->doc = $opts->params->doc_name;
 				$opts->method = "PUT";
-				unset($params->doc_name);
 			}
 			$opts->params = $params;
 		}

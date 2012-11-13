@@ -3,6 +3,7 @@
 require_once 'NanoDB.php';
 require_once 'Relax.php';
 require_once 'NanoDocument.php';
+require_once 'OptionsClass.php';
 
 class nano{
 
@@ -34,4 +35,48 @@ class nano{
             die ();
         }
     }
+
+
+    static function arrayToObject($array, $class = 'stdClass', $strict = false)
+    {
+        if (!is_array($array)) {
+            return $array;
+        }
+
+        //create an instance of an class without calling class's constructor
+        $object = unserialize(
+                sprintf(
+                        'O:%d:"%s":0:{}', strlen($class), $class
+                )
+        );
+
+        if (is_array($array) && count($array) > 0) {
+            foreach ($array as $name => $value) {
+                $name = strtolower(trim($name));
+                if (!empty($name)) {
+
+                    if(method_exists($object, 'set'.$name)){
+                        $object->{'set'.$name}(Nano::arrayToObject($value));
+                    }else{
+                        if(($strict)){
+
+                            if(property_exists($class, $name)){
+
+                                $object->$name = Nano::arrayToObject($value); 
+
+                            }
+
+                        }else{
+                            $object->$name = Nano::arrayToObject($value); 
+                        }
+
+                    }
+
+                }
+            }
+            return $object;
+        } else {
+            return FALSE;
+        }
+	}
 }

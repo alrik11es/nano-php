@@ -42,13 +42,12 @@ $alice = $nano->db->use('alice');
 
 in this examples we didn't specify a `result` from the returning value, the absence of a 
 result means _"do this, ignore what happens"_.
-in `nanoPHP` the returning value receives always three arguments:
+in `nanoPHP` the returning value receives always two arguments:
 
 
 * `err` - the error, if any
 * `body` - the http _response body_ from couchdb, if no error. 
   json parsed body, binary for non json responses
-* `header` - the http _response header_ from couchdb, if no error
 
 
 a simple but complete example is:
@@ -116,7 +115,7 @@ you can increase the size using `request_options` if this is problematic, and re
 
 ## database functions
 
-### $nano->db->create(name)
+### $nano->db->create(name);
 
 creates a couchdb database with the given `name`.
 
@@ -127,7 +126,7 @@ if (!$result->err) {
 }
 ```
 
-### $nano->db->get(name)
+### $nano->db->get(name);
 
 get informations about `name`.
 
@@ -138,7 +137,7 @@ if (!$result->err) {
 }
 ```
 
-### $nano->db->destroy(name)
+### $nano->db->destroy(name);
 
 destroys `name`.
 
@@ -148,49 +147,38 @@ $nano->db->destroy('alice');
 
 even though this examples looks sync it is an async function.
 
-### nano.db.list([callback])
+### $nano->db->list();
 
 lists all the databases in couchdb
 
-``` js
-nano.db.list(function(err, body) {
-  // body is an array
-  body.forEach(function(db) {
-    console.log(db);
-  });
-});
+``` php
+$result = $nano->db->list();
 ```
 
-### nano.db.compact(name, [designname], [callback])
+### $nano->db->compact(name, [designname]);
 
 compacts `name`, if `designname` is specified also compacts its
 views.
 
-### nano.db.replicate(source, target, [opts], [callback])
+### $nano->db->replicate(source, target, [opts]);
 
 replicates `source` on `target` with options `opts`. `target`
 has to exist, add `create_target:true` to `opts` to create it prior to
 replication.
 
-``` js
-nano.db.replicate('alice', 'http://admin:password@otherhost.com:5984/alice',
-                  { create_target:true }, function(err, body) {
-    if (!err) 
-      console.log(body);
+``` php
+$result = $nano->db->replicate('alice', 'http://admin:password@otherhost.com:5984/alice',
+     array("create_target"=>true));
 });
 ```
 
-### nano.db.changes(name, [params], [callback])
+### $nano->db->changes(name, [params])
 
 asks for the changes feed of `name`, `params` contains additions
 to the query string.
 
-``` js
-nano.db.changes('alice', function(err, body) {
-  if (!err) {
-    console.log(body);
-  }
-});
+``` php
+$result = nano->db->changes('alice');
 ```
 
 ### nano.db.follow(name, [params], [callback])

@@ -8,7 +8,7 @@ class NanoDB{
 	}
 
 	function create($db_name){
-		$opts = new stdClass();
+		$opts = new OptionsClass();
 		$opts->db = $db_name;
 		$opts->method = 'PUT';
 		
@@ -17,7 +17,7 @@ class NanoDB{
 	}
 
 	function get($db_name){
-		$opts = new stdClass();
+		$opts = new OptionsClass();
 		$opts->db = $db_name;
 		$opts->method = 'GET';
 
@@ -29,7 +29,7 @@ class NanoDB{
 	 *	Destroys $db_name
 	 **/
 	function destroy($db_name){
-		$opts = new stdClass();
+		$opts = new OptionsClass();
 		$opts->db = $db_name;
 		$opts->method = 'DELETE';
 
@@ -41,7 +41,7 @@ class NanoDB{
 	 *	Lists all the databases in couchdb
 	 **/
 	function list_dbs(){
-		$opts = new stdClass();
+		$opts = new OptionsClass();
 		$opts->db = "_all_dbs";
 		$opts->method = 'GET';
 

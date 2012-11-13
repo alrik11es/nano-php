@@ -4,6 +4,7 @@ require 'src/Nano.php';
 
 $nano = new Nano('http://localhost:5984');
 
+
 //$err = $nano->db->create('alice');
 
 //$nano->db->create('alice');
@@ -12,4 +13,6 @@ $nano = new Nano('http://localhost:5984');
 
 $alice = $nano->db->use('alice');
 
-$alice->insert('rabbit');
+
+$result = $alice->insert(array('crazy'=>false, 'chineese' => true), 'rabbit');
+print_r($result);

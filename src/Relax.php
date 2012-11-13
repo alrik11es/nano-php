@@ -5,7 +5,11 @@ class Relax{
 	public $value;
 	public $nano;
 	
-	function __construct($opts, $nano){
+	function __construct(OptionsClass $opts, $nano){
+
+		/*echo '<pre>';
+		print_r($opts);
+		echo '</pre>';*/
 
 		$this->nano = $nano;
 
@@ -29,6 +33,12 @@ class Relax{
   		 	}
 		}
 
+		if(isset($opts->params) && is_object($opts->params)){
+			foreach($opts->params as $key => $value){
+				//params[key] = JSON.stringify(params[key]);
+			}
+		}
+
 		$ch = curl_init($path);
 
     	curl_setopt($ch, CURLOPT_POST, 1);
@@ -37,11 +47,17 @@ class Relax{
     	// If there is a body we must send that body
     	if(isset($opts->body)){
 			//curl_setopt($ch, CURLOPT_CUSTOMREQUEST, json_encode($opts->body));
-			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($opts->body)); 
+			if(is_object($opts->body) || is_array($opts->body))
+				curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($opts->body)); 
+			else
+				trigger_error("The document can be only an object or array", E_USER_ERROR);
     	}
 
+    	// Fiddler debug line
+    	//curl_setopt($ch, CURLOPT_PROXY, '127.0.0.1:8888');
+
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $opts->method);
 
 		$this->value = curl_exec($ch);
@@ -60,7 +76,6 @@ class Relax{
 			$return->error = $this->value->error;
 
 		$return->body = $this->original_message;
-		$return->header = 'Deactivate'; //$this->headers;
 
 		return $return;
 		// Errors need to be filtered
