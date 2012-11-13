@@ -41,6 +41,7 @@ in this examples we didn't specify a `callback` function, the absence of a
 callback means _"do this, ignore what happens"_.
 in `nano` the callback function receives always three arguments:
 
+
 * `err` - the error, if any
 * `body` - the http _response body_ from couchdb, if no error. 
   json parsed body, binary for non json responses
