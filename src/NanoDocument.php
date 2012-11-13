@@ -8,15 +8,15 @@ class NanoDocument{
 		$this->nano = $nano;
 	}
 
-	function insert($doc, $params){
+	function insert($doc, $params = null){
 		//var opts = {db: db_name, body: doc, method: "POST"};
 
 		$opts = new stdClass();
 		$opts->db = $this->nano->config->db;
-		$opts->doc_name = $params;
+		$opts->body = $doc;
 		$opts->method = 'POST';
 
-		if($params === "string"){
+		if(is_string($params)){
 			$opts->doc_name = $params;
 		} else if ($params) {
 			if($params->doc_name) {

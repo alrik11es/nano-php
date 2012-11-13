@@ -6,13 +6,13 @@ minimalistic couchdb driver for PHP >5.3 it's intended to be exactly the same as
 https://github.com/dscape/nano but in PHP (I'm avoiding the use of callbacks because
 I think PHP people doesn't need to mess with that).
 
-`nano` features:
+`nanoPHP` features:
 
 * **minimalistic** - there is only a minimum of abstraction between you and 
   couchdb
 * **pipes** - proxy requests from couchdb directly to your end user
 * **errors** - errors are proxied directly from couchdb: if you know couchdb 
-  you already know `nano`
+  you already know `nanoPHP`
 
 
 ## installation
@@ -51,7 +51,7 @@ in `nanoPHP` the returning value receives always three arguments:
 * `header` - the http _response header_ from couchdb, if no error
 
 
-a simple but complete example using callbacks is:
+a simple but complete example is:
 
 ``` php
 $nano = new Nano('http://localhost:5984');
@@ -71,7 +71,7 @@ $rabbit->crazy = true;
 $result = $alice->insert($rabbit, 'rabbit');
 
 if(!isset($result->error)){
-  echo 'You have inserted the rabbit.<br/>';
+  echo 'you have inserted the rabbit.<br/>';
   echo $result->body;
 }
 
@@ -94,14 +94,6 @@ configuring nano to use your database server is as simple as:
 $server = new Nano('http://localhost:5984');
 $server->use('foo');
 ```
-
-however if you don't need to instrument database objects you can simply:
-
-``` php
-// nano parses the url and knows this is a database
-$db = new Nano('http://localhost:5984/foo');
-```
-
 to specify further configuration options you can pass an object literal instead:
 
 ``` js
@@ -124,7 +116,7 @@ you can increase the size using `request_options` if this is problematic, and re
 
 ## database functions
 
-### nano->db->create(name)
+### $nano->db->create(name)
 
 creates a couchdb database with the given `name`.
 
@@ -135,7 +127,7 @@ if (!$result->err) {
 }
 ```
 
-### nano->db->get(name)
+### $nano->db->get(name)
 
 get informations about `name`.
 
@@ -146,7 +138,7 @@ if (!$result->err) {
 }
 ```
 
-### nano->db->destroy(name)
+### $nano->db->destroy(name)
 
 destroys `name`.
 
