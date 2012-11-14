@@ -42,13 +42,7 @@ $alice = $nano->db->use('alice');
 
 in this examples we didn't specify a `result` from the returning value, the absence of a 
 result means _"do this, ignore what happens"_.
-in `nanoPHP` the returning value receives always two arguments:
-
-
-* `err` - the error, if any
-* `body` - the http _response body_ from couchdb, if no error. 
-  json parsed body, binary for non json responses
-
+in `nanoPHP` the returning value is a stdClass directly from the couchDB JSON result
 
 a simple but complete example is:
 

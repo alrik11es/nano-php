@@ -44,15 +44,52 @@ class NanoDocument{
 	}
 	
 	function get(){}
+
 	function head(){}
+
 	function copy(){}
+
 	function bulk(){}
-	function list_doc(){}
+
+	function list_docs($params = false){
+		$opts = new OptionsClass();
+		$opts->db = $this->nano->config->db;
+		$opts->path = '_all_docs/';
+		if($params)
+			$opts->params = $params;
+		$opts->method = 'GET';
+
+		$relax = new Relax($opts, $this->nano);
+		return $relax->exec();
+	}
+
 	function fetch(){}
 
 	// Views
-	function view(){}
-	function show(){}
+	function view($design_name, $view_name, $params){
+
+		$opts = new OptionsClass();
+		$opts->db = $this->nano->config->db;
+		$opts->path = '_design/'.$design_name.'/_view/'.$view_name;
+		$opts->params = $params;
+
+		if(isset($params->keys)){
+			$opts->body = array('keys'=>$params->keys); // {keys: params.keys}
+			unset($opts->params->keys);
+			$opts->method = 'POST';
+
+			$relax = new Relax($opts, $this->nano);
+			return $relax->exec();
+		} else {
+			$opts->method = 'GET';
+			$relax = new Relax($opts, $this->nano);
+			return $relax->exec();
+		}
+
+	}
+
+	function show($design_name, $show_fn_name, $docId, $params){}
+
 	function atomic(){}
 
 
@@ -62,7 +99,7 @@ class NanoDocument{
         switch ($func)
         {
             case 'list':
-                return $this->list_doc((isset($args[0]))? $args[0]: null);
+                return $this->list_docs((isset($args[0]))? $args[0]: null);
             break;
             default:
                 trigger_error("Call to undefined method ".__CLASS__."::$func()", E_USER_ERROR);

@@ -69,16 +69,8 @@ class Relax{
 	}
 
 	public function exec(){
-
-		$return = new stdClass();
-
-		if(isset($this->value->error))
-			$return->error = $this->value->error;
-
-		$return->body = $this->original_message;
+		$return = json_decode($this->original_message);
 
 		return $return;
-		// Errors need to be filtered
-		//return array($this->value);
 	}
 }

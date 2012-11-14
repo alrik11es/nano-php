@@ -1,7 +1,6 @@
 <?php
 
 class OptionsClass{
-
 	public $db;
 	public $method;
 	public $path;
@@ -11,5 +10,4 @@ class OptionsClass{
 	public $content_type;
 	public $body;
 	public $encoding;
-
 }
