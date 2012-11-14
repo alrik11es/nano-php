@@ -24,6 +24,9 @@ class DBTest extends PHPUnit_Framework_TestCase
 		$this->assertFalse(isset($result->error), "Failed to create DB");
 		$result = $nano->db->create(array('error','database'));
 		$this->assertTrue(isset($result->error), 'Multiple DB creation not supported');
+		// Duplicating must be checked
+		$result = $nano->db->create('alice');
+		$this->assertTrue(isset($result->error), "Db duplicated... WTF?");
 	}
 
 	public function testDbDelete()

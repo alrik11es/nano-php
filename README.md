@@ -115,7 +115,7 @@ creates a couchdb database with the given `name`.
 
 ``` php
 $result = $nano->db->create('alice');
-if (!$result->err) {
+if (!$result->error) {
   echo ('database alice created!');
 }
 ```
@@ -126,7 +126,7 @@ get informations about `name`.
 
 ``` php
 $result = $nano->db->get('alice');
-if (!$result->err) {
+if (!$result->error) {
   echo ($result->body);
 }
 ```
