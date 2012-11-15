@@ -3,6 +3,7 @@ v0.1
 
 [![Build Status](https://secure.travis-ci.org/alrik11es/nanoPHP.png?branch=master)](https://travis-ci.org/alrik11es/nanoPHP)
 
+minimalistic couchdb driver for PHP >5.3 it's intended to be exactly the same as
 https://github.com/dscape/nano but in PHP (I'm avoiding the use of callbacks because
 I think PHP people doesn't need to mess with that).
 
