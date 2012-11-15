@@ -5,6 +5,7 @@
     "homepage": "http://github.com/alrik11es/nano-php",
     "type": "library",
     "license": "MIT",
+    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Marcos Sigueros Fernández",
