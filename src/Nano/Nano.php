@@ -2,7 +2,7 @@
 
 namespace Nano;
 
-class nano{
+class Nano{
 
 	public $config;
 	public $db;
