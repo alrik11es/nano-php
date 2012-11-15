@@ -1,6 +1,6 @@
 <?php
 
-namespace Nano;
+namespace Nano\Common;
 
 class Relax{
 
