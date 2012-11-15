@@ -1,5 +1,5 @@
 {
-    "name": "alrik11es/nano-php",
+    "name": "nano-php/nano-php",
     "description": "Minimalistic couchdb driver for PHP >5.3",
     "keywords": ["couchDB", "driver", "minimalistic"],
     "homepage": "http://github.com/alrik11es/nano-php",
