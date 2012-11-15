@@ -17,13 +17,12 @@ ACTIONS TESTED
 require 'src/Nano.php';
 class DBTest extends PHPUnit_Framework_TestCase
 {
+
 	public function testDbCreate()
 	{
 		$nano = new Nano('http://localhost:5984');
 		$result = $nano->db->create('alice');
 		$this->assertFalse(isset($result->error), "Failed to create DB");
-		$result = $nano->db->create(array('error','database'));
-		$this->assertTrue(isset($result->error), 'Multiple DB creation not supported');
 		// Duplicating must be checked
 		$result = $nano->db->create('alice');
 		$this->assertTrue(isset($result->error), "Db duplicated... WTF?");
@@ -34,6 +33,9 @@ class DBTest extends PHPUnit_Framework_TestCase
 		$nano = new Nano('http://localhost:5984');
 		$result = $nano->db->destroy('alice');
 		$this->assertFalse(isset($result->error), "Failed to delete DB");
+
+		$result = $nano->db->destroy('alice');
+		$this->assertTrue(isset($result->error), "Can you delete the same DB twice??");
 	}
 
 	

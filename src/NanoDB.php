@@ -8,6 +8,10 @@ class NanoDB{
 	}
 
 	function create($db_name){
+
+		if(!is_string($db_name))
+			trigger_error("Multiple databases at same time not allowed for creation. (String needed)", E_USER_ERROR);
+
 		$opts = new OptionsClass();
 		$opts->db = $db_name;
 		$opts->method = 'PUT';
@@ -17,6 +21,10 @@ class NanoDB{
 	}
 
 	function get($db_name){
+
+		if(!is_string($db_name))
+			trigger_error("You can only get info of one DB. (String needed)", E_USER_ERROR);
+
 		$opts = new OptionsClass();
 		$opts->db = $db_name;
 		$opts->method = 'GET';
@@ -29,6 +37,10 @@ class NanoDB{
 	 *	Destroys $db_name
 	 **/
 	function destroy($db_name){
+
+		if(!is_string($db_name))
+			trigger_error("You cannot destroy multiple databases with the same command. (String needed)", E_USER_ERROR);
+
 		$opts = new OptionsClass();
 		$opts->db = $db_name;
 		$opts->method = 'DELETE';
