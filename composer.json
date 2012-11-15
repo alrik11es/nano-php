@@ -1,8 +1,8 @@
 {
-    "name": "alrik11es/nanoPHP",
+    "name": "alrik11es/nano-php",
     "description": "Minimalistic couchdb driver for PHP >5.3",
     "keywords": ["couchDB", "driver", "minimalistic"],
-    "homepage": "http://github.com/alrik11es/nanoPHP",
+    "homepage": "http://github.com/alrik11es/nano-php",
     "type": "library",
     "license": "MIT",
     "authors": [

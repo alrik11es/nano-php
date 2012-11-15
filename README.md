@@ -1,18 +1,18 @@
-# nanoPHP
+# nano-php
 v0.1
 
-[![Build Status](https://secure.travis-ci.org/alrik11es/nanoPHP.png?branch=master)](https://travis-ci.org/alrik11es/nanoPHP)
+[![Build Status](https://secure.travis-ci.org/alrik11es/nano-php.png?branch=master)](https://travis-ci.org/alrik11es/nano-php)
 
 minimalistic couchdb driver for PHP >5.3 it's intended to be exactly the same as
 https://github.com/dscape/nano but in PHP (I'm avoiding the use of callbacks because
 I think PHP people doesn't need to mess with that).
 
-`nanoPHP` features:
+`nano-php` features:
 
 * **minimalistic** - there is only a minimum of abstraction between you and 
   couchdb
 * **errors** - errors are proxied directly from couchdb: if you know couchdb 
-  you already know `nanoPHP`
+  you already know `nano-php`
 
 Remember that this is a stable preview version not all options are ready to go.
 
@@ -31,11 +31,11 @@ There's still a lot of work to be done here.
 ## installation
 
 1. install [Composer][1]
-2. `composer install nanoPHP`
+2. `composer install nano-php`
 
 ## getting started
 
-to use `nanoPHP` you need to connect it to your couchdb install, to do that:
+to use `nano-php` you need to connect it to your couchdb install, to do that:
 
 ``` php
 $nano = new Nano('http://localhost:5984');
@@ -55,7 +55,7 @@ $alice = $nano->db->use('alice');
 
 in this examples we didn't specify a `result` from the returning value, the absence of a 
 result means _"do this, ignore what happens"_.
-in `nanoPHP` the returning value is a stdClass directly from the couchDB JSON result
+in `nano-php` the returning value is a stdClass directly from the couchDB JSON result
 
 a simple but complete example is:
 
@@ -596,10 +596,10 @@ where `list_doc_params` is the test name.
         __/       /
        /__.|_|-|_|     cannes est superb
 
-* code: `git clone git://github.com/alrik11es/nanoPHP.git`
-* home: <http://github.com/alrik11es/nanoPHP>
-* bugs: <http://github.com/alrik11es/nanoPHP/issues>
+* code: `git clone git://github.com/alrik11es/nano-php.git`
+* home: <http://github.com/alrik11es/nano-php>
+* bugs: <http://github.com/alrik11es/nano-php/issues>
 
 [1]: http://getcomposer.org/
-[2]: http://github.com/alrik11es/nanoPHP/issues
+[2]: http://github.com/alrik11es/nano-php/issues
 >>>>>>> Dev
