@@ -30,8 +30,22 @@ There's still a lot of work to be done here.
 
 ## installation
 
+### Composer way
 1. install [Composer][1]
-2. `composer install nano-php`
+2. create a file called composer.json in your project folder add {} inside
+3. `composer require`
+4. `nano-php`
+5. select desired version then push intro
+6. Include or require autoloader.php in your project
+7. Enjoy
+
+### Uncompress way
+1. Clone or download this repo
+2. Copy the src folder where you want or call as you wish.
+3. Include or require Nano.php
+4. Enjoy
+
+Are any of this installation methods bad? Add an issue if you encounter any problems.
 
 ## getting started
 
@@ -102,15 +116,7 @@ $server->use('foo');
 ```
 to specify further configuration options you can pass an object literal instead:
 
-``` js
-// nano parses the url and knows this is a database
-var db = require('nano')(
-  { "url"             : "http://localhost:5984/foo"
-  , "request_options" : { "proxy" : "http://someproxy" }
-  , "log"             : function (id, args) { 
-      console.log(id, args);
-    }
-  });
+``` php
 ```
 please check [request] for more information on the defaults. they support features like cookie jar, proxies, ssl, etc.
 
