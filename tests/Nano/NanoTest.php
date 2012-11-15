@@ -38,7 +38,7 @@ class DBTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue(isset($result->error), "Can you delete the same DB twice??");
 	}
 
-	
+
 	public function testDbList()
 	{
 		$nano = new Nano('http://localhost:5984');
