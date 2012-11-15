@@ -19,7 +19,6 @@ Remember that this is a stable preview version not all options are ready to go.
 Things that should work:
 
 - Create DB
-- Create multiple DBs
 - Delete DB
 - DB list command
 - Use a DB to create a Document

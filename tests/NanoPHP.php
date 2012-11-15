@@ -4,7 +4,6 @@ ACTIONS TESTED
 ==============
 
 - Create DB
-- Create multiple DBs
 - Delete DB
 - DB list command
 - Use a DB to create a Document
