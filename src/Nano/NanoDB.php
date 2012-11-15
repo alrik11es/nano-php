@@ -1,4 +1,7 @@
 <?php
+
+namespace Nano;
+
 class NanoDB{
 
 	private $nano;

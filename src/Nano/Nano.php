@@ -1,9 +1,6 @@
 <?php
 
-require_once 'NanoDB.php';
-require_once 'Relax.php';
-require_once 'NanoDocument.php';
-require_once 'OptionsClass.php';
+namespace Nano;
 
 class nano{
 
@@ -11,7 +8,7 @@ class nano{
 	public $db;
 
 	function __construct($url){
-		$this->config = new stdClass();
+		$this->config = new \stdClass();
 		$this->config->url = $url;
 		$this->db = new NanoDB($this);
 	}

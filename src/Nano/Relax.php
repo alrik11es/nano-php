@@ -1,5 +1,7 @@
 <?php
 
+namespace Nano;
+
 class Relax{
 
 	public $value;

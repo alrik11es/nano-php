@@ -1,5 +1,7 @@
 <?php
 
+namespace Nano;
+
 class NanoDocument{
 
 	private $nano;
@@ -15,7 +17,7 @@ class NanoDocument{
 		$opts->db = $this->nano->config->db;
 		$opts->body = $doc;
 		$opts->method = 'POST';
-		$opts->params = new stdClass();
+		$opts->params = new \stdClass();
 
 		if(is_array($params)){
 			$params = Nano::arrayToObject($params);
@@ -45,7 +47,7 @@ class NanoDocument{
 		$opts->db = $this->nano->config->db;
 		$opts->doc = $doc_name;
 		$opts->method = 'DELETE';
-		$opts->params = new stdClass();
+		$opts->params = new \stdClass();
 		$opts->params->rev = $rev;
 
 		$relax = new Relax($opts, $this->nano);

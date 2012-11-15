@@ -13,8 +13,8 @@ ACTIONS TESTED
 
 */
 
+use \Nano\Nano;
 
-require 'src/Nano.php';
 class DBTest extends PHPUnit_Framework_TestCase
 {
 
@@ -63,7 +63,7 @@ class DocumentTest extends PHPUnit_Framework_TestCase
 	{
 		$nano = new Nano('http://localhost:5984');
 		$alice = $nano->use('alice');
-		$this->assertInstanceOf('NanoDocument', $alice, 'Cannot select alice for DB');
+		$this->assertInstanceOf('\Nano\NanoDocument', $alice, 'Cannot select alice for DB');
 		$result = $alice->insert(array('crazy'=>true), 'rabbit');
 		$this->assertTrue(isset($result->ok), 'The crazy rabbit document cannot be created');
 		$result = $alice->list();

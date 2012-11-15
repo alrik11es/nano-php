@@ -18,7 +18,7 @@
         "ext-curl": "*"
     },
     "autoload": {
-        "psr-0": {"nano-php": "./src/"}
+        "psr-0": {"Nano": "./src/"}
     },
     "extra": {
         "branch-alias": {

@@ -1,5 +1,7 @@
 <?php
 
+namespace Nano;
+
 class OptionsClass{
 	public $db;
 	public $method;
