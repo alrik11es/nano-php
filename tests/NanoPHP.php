@@ -65,9 +65,21 @@ class DocumentTest extends PHPUnit_Framework_TestCase
 		$alice = $nano->use('alice');
 		$this->assertInstanceOf('NanoDocument', $alice, 'Cannot select alice for DB');
 		$result = $alice->insert(array('crazy'=>true), 'rabbit');
-		$this->assertTrue(isset($result->ok), 'The document cannot be created');
+		$this->assertTrue(isset($result->ok), 'The crazy rabbit document cannot be created');
 		$result = $alice->list();
 		$this->assertTrue(isset($result->rows), 'The document cannot be created');
+
+		$alice->insert(array('character'=>'Alice'));
+		$alice->insert(array('character'=>'Caterpillar'));
+		$alice->insert(array('character'=>'Cheshire Cat'));
+		$alice->insert(array('character'=>'Queen of Hearts'));
+
+		$alice->insert(array('language'=>'javascript', 'views' => array('list'=>array('map'=>'function(doc) {  if(doc.character != null)   emit("character", doc.character); }'))),'_design/characters');
+
+		$result = $alice->view('characters', 'list');
+		//print_r($result);
+		$this->assertTrue(isset($result->rows), 'The view cannot be listed.');
+
 	}
 
     public static function tearDownAfterClass()

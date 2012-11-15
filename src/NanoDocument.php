@@ -39,11 +39,22 @@ class NanoDocument{
 		return $relax->exec();
 	}
 	
-	function destroy(){
+	function destroy($doc_name, $rev){
 
+		$opts = new OptionsClass();
+		$opts->db = $this->nano->config->db;
+		$opts->doc = $doc_name;
+		$opts->method = 'DELETE';
+		$opts->params = new stdClass();
+		$opts->params->rev = $rev;
+
+		$relax = new Relax($opts, $this->nano);
+		return $relax->exec();
 	}
 	
-	function get(){}
+	function get($doc_name, $params){
+		//return relax({ db: db_name, doc: doc_name, method: "GET", params: params }, callback);
+	}
 
 	function head(){}
 
@@ -66,14 +77,14 @@ class NanoDocument{
 	function fetch(){}
 
 	// Views
-	function view($design_name, $view_name, $params){
+	function view($design_name, $view_name, $params = false){
 
 		$opts = new OptionsClass();
 		$opts->db = $this->nano->config->db;
 		$opts->path = '_design/'.$design_name.'/_view/'.$view_name;
 		$opts->params = $params;
 
-		if(isset($params->keys)){
+		if(isset($params->keys) && $params){
 			$opts->body = array('keys'=>$params->keys); // {keys: params.keys}
 			unset($opts->params->keys);
 			$opts->method = 'POST';
