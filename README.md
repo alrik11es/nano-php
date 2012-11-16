@@ -562,15 +562,7 @@ then open `/tmp/rabbit.png` and you will see the rabbit picture.
 
 ## tutorials & screencasts
 
-* screencast: [couchdb and nano](http://nodetuts.com/tutorials/30-couchdb-and-nano.html#video)
-* article: [nano - a minimalistic couchdb client for nodejs](http://writings.nunojob.com/2011/08/nano-minimalistic-couchdb-client-for-nodejs.html)
-* article: [getting started with node.js and couchdb](http://writings.nunojob.com/2011/09/getting-started-with-nodejs-and-couchdb.html)
-* article: [document update handler support](http://jackhq.tumblr.com/post/16035106690/nano-v1-2-x-document-update-handler-support-v1-2-x)
-* article: [nano 3](http://writings.nunojob.com/2012/05/Nano-3.html)
-* article: [securing a site with couchdb cookie authentication using node.js and nano](http://mahoney.eu/2012/05/23/couchdb-cookie-authentication-nodejs-nano/)
-* article: [adding copy to nano](http://blog.jlank.com/2012/07/04/adding-copy-to-nano/)
-* article: [how to update a document with nano](http://writings.nunojob.com/2012/07/How-To-Update-A-Document-With-Nano-The-CouchDB-Client-for-Node.js.html)
-* article: [thoughts on development using couchdb with node.js](http://tbranyen.com/post/thoughts-on-development-using-couchdb-with-nodejs)
+* [Using Composer with FuelPHP 1.x](http://tomschlick.com/2012/11/01/composer-with-fuelphp/)
 
 ## roadmap
 
@@ -581,18 +573,12 @@ check [issues][2]
 to run (and configure) the test suite simply:
 
 ``` sh
-cd nano
-npm install
-npm test
+cd nano-php
+composer install
+phpunit
 ```
 
 after adding a new test you can run it individually (with verbose output) using:
-
-``` sh
-nano_env=testing node tests/doc/list.js list_doc_params
-```
-
-where `list_doc_params` is the test name.
 
 ## meta
 

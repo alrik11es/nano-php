@@ -1,6 +1,6 @@
 <?php
 
-namespace Nano\Common;
+namespace Nano;
 
 class NanoDocument{
 
