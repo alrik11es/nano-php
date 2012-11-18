@@ -114,7 +114,7 @@ configuring nano to use your database server is as simple as:
 $server = new Nano('http://localhost:5984');
 $server->use('foo');
 ```
-to specify further configuration options you can pass an object literal instead:
+to specify further configuration options:
 
 ``` php
 ```
@@ -194,7 +194,7 @@ to the query string.
 $result = nano->db->changes('alice');
 ```
 
-### nano.db.follow(name, [params], [callback])
+### $nano->db->follow(name, [params], [callback]);
 
 uses [follow] to create a solid changes feed. please consult follow documentation for more information as this is a very complete api on it's own
 
@@ -209,30 +209,28 @@ process.nextTick(function () {
 });
 ```
 
-### nano.use(name)
+### $nano->use(name);
 
 creates a scope where you operate inside `name`.
 
-``` js
-var alice = nano.use('alice');
-alice.insert({ crazy: true }, 'rabbit', function(err, body) {
-  // do something
-});
+``` php
+$alice = $nano->use('alice');
+$alice->insert(array("crazy"=>true), 'rabbit');
 ```
 
-### nano.db.use(name)
+### $nano->db->use(name);
 
-alias for `nano.use`
+alias for `$nano->use`
 
-### nano.db.scope(name)
+### nano.db.scope(name);
 
-alias for `nano.use`
+alias for `$nano->use`
 
-### nano.scope(name)
+### $nano->scope(name);
 
-alias for `nano.use`
+alias for `$nano->use`
 
-### nano.request(opts, [callback])
+### $nano->request(opts);
 
 makes a request to couchdb, the available `opts` are:
 
@@ -247,13 +245,13 @@ makes a request to couchdb, the available `opts` are:
 * `opts.body` – the document or attachment body
 * `opts.encoding` – the encoding for attachments
 
-### nano.relax(opts, [callback])
+### $nano->relax(opts);
 
-alias for `nano.request`
+alias for `$nano->request`
 
-### nano.dinosaur(opts, [callback])
+### $nano->dinosaur(opts);
 
-alias for `nano.request`
+alias for `$nano->request`
 
                     _
                   / '_)  WAT U SAY!
@@ -262,28 +260,25 @@ alias for `nano.request`
       _/  (   | ( |
      /__.-|_|--|_l
 
-### nano.config
+### $nano->config;
 
-an object containing the nano configurations, possible keys are:
+method containing the nano configurations, possible keys are:
 
 * `url` - the couchdb url
 * `db` - the database name
 
 ## document functions
 
-### db.insert(doc, [params], [callback])
+### $db->insert(doc, [params]);
 
 inserts `doc` in the database with  optional `params`. if params is a string, its assumed as the intended document name. if params is an object, its passed as query string parameters and `doc_name` is checked for defining the document name.
 
-``` js
-var alice = nano.use('alice');
-alice.insert({ crazy: true }, 'rabbit', function(err, body) {
-  if (!err)
-    console.log(body);
-});
+``` php
+$alice = $nano->use('alice');
+$alice->insert(array('crazy'=>true), 'rabbit');
 ```
 
-### db.destroy(docname, rev, [callback])
+### $db->destroy(docname, rev);
 
 removes revision `rev` of `docname` from couchdb.
 

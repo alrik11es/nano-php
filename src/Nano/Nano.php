@@ -1,6 +1,13 @@
 <?php
 
+
 namespace Nano;
+
+require_once 'NanoDocument.php';
+require_once 'NanoDB.php';
+require_once 'Relax.php';
+require_once 'OptionsClass.php';
+
 
 class Nano{
 
@@ -24,7 +31,7 @@ class Nano{
     {
         switch ($func)
         {
-            case 'use':
+            case ('use' || 'scope'):
                 return $this->use_db((isset($args[0]))? $args[0]: null);
             break;
             default:
@@ -32,7 +39,6 @@ class Nano{
             die ();
         }
     }
-
 
     static function arrayToObject($array, $class = 'stdClass', $strict = false)
     {

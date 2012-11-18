@@ -39,7 +39,6 @@ class DBTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue(isset($result->error), "Can you delete the same DB twice??");
 	}
 
-
 	public function testDbList()
 	{
 		$nano = new Nano('http://localhost:5984');
@@ -58,7 +57,26 @@ class DocumentTest extends PHPUnit_Framework_TestCase
     {
         $nano = new Nano('http://localhost:5984');
         $nano->db->create('alice');
+        $nano->db->create('alien');
     }
+
+
+	public function testUse(){
+		$nano = new Nano('http://localhost:5984');
+		$alice = $nano->use('alice');
+		$alien = $nano->use('alien');
+		$alien->insert(array('character'=>'Queen'));
+		$alice->insert(array('character'=>'Rabbit'));
+	}
+
+	public function testScope(){
+		$nano = new Nano('http://localhost:5984');
+		$alice = $nano->scope('alice');
+		$alien = $nano->scope('alien');
+		$alien->insert(array('character'=>'Rippley'));
+		$alice->insert(array('character'=>'The Hatter'));
+	}
+
 
     public function testDocumentOperations()
 	{
@@ -90,5 +108,6 @@ class DocumentTest extends PHPUnit_Framework_TestCase
     {
     	$nano = new Nano('http://localhost:5984');
      	$nano->db->destroy('alice');
+     	$nano->db->destroy('alien');
     }
 }
