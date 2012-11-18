@@ -55,7 +55,7 @@ class Relax{
     	}
 
     	// Fiddler debug line
-    	curl_setopt($ch, CURLOPT_PROXY, '127.0.0.1:8888');
+    	//curl_setopt($ch, CURLOPT_PROXY, '127.0.0.1:8888');
 
     	// This is the type of the transfer
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));

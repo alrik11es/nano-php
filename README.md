@@ -351,73 +351,6 @@ bulk fetch of the database documents, `docnames` are specified as per
 additional query string `params` can be specified, `include_doc` is always set
 to `true`.  
 
-## attachments functions
-
-### db.attachment.insert(docname, attname, att, contenttype, [params], [callback])
-
-inserts an attachment `attname` to `docname`, in most cases
- `params.rev` is required. refer to the
- [doc](http://wiki.apache.org/couchdb/HTTP_Document_API) for more details.
-
-``` js
-var fs = require('fs');
-
-fs.readFile('rabbit.png', function(err, data) {
-  if (!err) {
-    alice.attachment.insert('rabbit', 'rabbit.png', data, 'image/png',
-      { rev: '12-150985a725ec88be471921a54ce91452' }, function(err, body) {
-        if (!err)
-          console.log(body);
-    });
-  }
-});
-```
-
-or using `pipe`:
-
-``` js
-var fs = require('fs');
-
-fs.createReadStream('rabbit.png').pipe(
-    alice.attachment.insert('new', 'rab.png', null, 'image/png')
-);
-```
-
-### db.attachment.get(docname, attname, [params], [callback])
-
-get `docname`'s attachment `attname` with optional query string additions
-`params`.  
-
-``` js
-var fs = require('fs');
-
-alice.attachment.get('rabbit', 'rabbit.png', function(err, body) {
-  if (!err) {
-    fs.writeFile('rabbit.png', body);
-  }
-});
-```
-
-or using `pipe`:
-
-``` js
-var fs = require('fs');
-
-alice.attachment.get('rabbit', 'rabbit.png').pipe(fs.createWriteStream('rabbit.png'));
-```
-
-### db.attachment.destroy(docname, attname, rev, [callback])
-
-destroy attachment `attname` of `docname`'s revision `rev`.
-
-``` js
-alice.attachment.destroy('rabbit', 'rabbit.png',
-    '1-4701d73a08ce5c2f2983bf7c9ffd3320', function(err, body) {
-      if (!err)
-        console.log(body);
-});
-```
-
 ## views and design functions
 
 ### db.view(designname, viewname, [params], [callback])
@@ -512,48 +445,6 @@ alice.insert(doc, function (err, body, headers) {
   callback(null, "It worked");
 });
 ```
-
-## advanced features
-
-### extending nano
-
-nano is minimalistic but you can add your own features with
-`nano.request(opts, callback)`
-
-for example, to create a function to retrieve a specific revision of the
-`rabbit` document:
-
-``` js
-function getrabbitrev(rev, callback) {
-  nano.request({ db: 'alice',
-                 doc: 'rabbit',
-                 method: 'get',
-                 params: { rev: rev }
-               }, callback);
-}
-
-getrabbitrev('4-2e6cdc4c7e26b745c2881a24e0eeece2', function(err, body) {
-  if (!err) {
-    console.log(body);
-  }
-});
-```
-### pipes
-
-you can pipe in nano like in any other stream.  
-for example if our `rabbit` document has an attachment with name `picture.png`
-(with a picture of our white rabbit, of course!) you can pipe it to a `writable
-stream`
-
-``` js
-var fs = require('fs'),
-    nano = require('nano')('http://127.0.0.1:5984/');
-var alice = nano.use('alice');
-alice.attachment.get('rabbit', 'picture.png').pipe(fs.createWriteStream('/tmp/rabbit.png'));
-```
-
-then open `/tmp/rabbit.png` and you will see the rabbit picture.
-
 
 ## tutorials & screencasts
 
