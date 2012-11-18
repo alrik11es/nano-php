@@ -17,7 +17,6 @@ class NanoDocument{
 		$opts->db = $this->nano->config->db;
 		$opts->body = $doc;
 		$opts->method = 'POST';
-		$opts->params = new \stdClass();
 
 		if(is_array($params)){
 			$params = Nano::arrayToObject($params);
@@ -26,6 +25,7 @@ class NanoDocument{
 		}
 
 		if(is_string($params)){
+			$opts->params = new \stdClass();
 			$opts->params->doc_name = $params;
 		}
 

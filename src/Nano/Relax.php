@@ -1,5 +1,4 @@
 <?php
-
 namespace Nano;
 
 class Relax{
@@ -8,10 +7,6 @@ class Relax{
 	public $nano;
 	
 	function __construct(OptionsClass $opts, $nano){
-
-		/*echo '<pre>';
-		print_r($opts);
-		echo '</pre>';*/
 
 		$this->nano = $nano;
 
@@ -35,22 +30,26 @@ class Relax{
   		 	}
 		}
 
-		if(isset($opts->params) && is_object($opts->params)){
+		// This maps the params that you request adding them to the query
+		if(isset($opts->params) && (is_object($opts->params) || is_array($opts->params))){
+			$path .= '?';
 			foreach($opts->params as $key => $value){
-				//params[key] = JSON.stringify(params[key]);
+				$path .= $key.'='.urlencode(json_encode($value));
 			}
 		}
 
+		// This is the Curl init where we add the path to the action we are going to do.
 		$ch = curl_init($path);
-
+		// We send the data as POST
     	curl_setopt($ch, CURLOPT_POST, 1);
-		//curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    	// We add a empty body to avoid -1 lenght in the query.
+		curl_setopt($ch, CURLOPT_POSTFIELDS, '');
 
     	// If there is a body we must send that body
     	if(isset($opts->body)){
-			//curl_setopt($ch, CURLOPT_CUSTOMREQUEST, json_encode($opts->body));
+			// The real body will be generated here if necessary
 			if(is_object($opts->body) || is_array($opts->body))
-				curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($opts->body)); 
+				curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($opts->body));
 			else
 				trigger_error("The document can be only an object or array", E_USER_ERROR);
     	}
@@ -58,8 +57,11 @@ class Relax{
     	// Fiddler debug line
     	//curl_setopt($ch, CURLOPT_PROXY, '127.0.0.1:8888');
 
+    	// This is the type of the transfer
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+		// We want to parse the return of the server data so true
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		// This is the REQUEST -> PUT, GET, DELETE...
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $opts->method);
 
 		$this->value = curl_exec($ch);
@@ -71,8 +73,8 @@ class Relax{
 	}
 
 	public function exec(){
+		// This will map the result as PHP object so you can work directly with it (Just like in .js)
 		$return = json_decode($this->original_message);
-
 		return $return;
 	}
 }

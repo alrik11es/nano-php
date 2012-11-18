@@ -10,6 +10,7 @@ ACTIONS TESTED
 - Inserting a document
 - List documents in DB
 - Show a view
+- Show a view with params
 
 */
 
@@ -74,12 +75,15 @@ class DocumentTest extends PHPUnit_Framework_TestCase
 		$alice->insert(array('character'=>'Cheshire Cat'));
 		$alice->insert(array('character'=>'Queen of Hearts'));
 
-		$alice->insert(array('language'=>'javascript', 'views' => array('list'=>array('map'=>'function(doc) {  if(doc.character != null)   emit("character", doc.character); }'))),'_design/characters');
+		$alice->insert(array('language'=>'javascript', 'views' => array('list'=>array('map'=>'function(doc) {  if(doc.character != null)   emit(doc.character, doc.character); }'))),'_design/characters');
 
 		$result = $alice->view('characters', 'list');
 		//print_r($result);
 		$this->assertTrue(isset($result->rows), 'The view cannot be listed.');
 
+		// Show only the Queen of Hearts
+		$result = $alice->view('characters', 'list', array('key'=>'Queen of Hearts'));
+		$this->assertTrue($result->rows[0]->key == 'Queen of Hearts', 'Something is wrong this action should return the Queen of Hearts');
 	}
 
     public static function tearDownAfterClass()
