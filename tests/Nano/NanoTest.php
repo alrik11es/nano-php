@@ -3,25 +3,25 @@
 ACTIONS TESTED
 ==============
 
-- Create DB
-- Delete DB
-- DB list command
-- Use a DB to create a Document
-- Inserting a document
-- List documents in DB
-- Show a view
-- Show a view with params
+This test will check each possible action indepently from others.
+Each action is programmed in the nano-php check if the integration
+tests are passing then all the methods checked here should work
+wherever you use them.
+
+If there are any unrefered case here feel free to add. 
 
 */
 
 use \Nano\Nano;
+
+define('DB','http://localhost:5984');
 
 class DBTest extends PHPUnit_Framework_TestCase
 {
 
 	public function testDbCreate()
 	{
-		$nano = new Nano('http://localhost:5984');
+		$nano = new Nano(DB);
 		$result = $nano->db->create('alice');
 		$this->assertFalse(isset($result->error), "Failed to create DB");
 		// Duplicating must be checked
@@ -31,7 +31,7 @@ class DBTest extends PHPUnit_Framework_TestCase
 
 	public function testDbDelete()
 	{
-		$nano = new Nano('http://localhost:5984');
+		$nano = new Nano(DB);
 		$result = $nano->db->destroy('alice');
 		$this->assertFalse(isset($result->error), "Failed to delete DB");
 
@@ -41,7 +41,7 @@ class DBTest extends PHPUnit_Framework_TestCase
 
 	public function testDbList()
 	{
-		$nano = new Nano('http://localhost:5984');
+		$nano = new Nano(DB);
 		$result = $nano->db->list();
 		$result = count($result);
 		$this->assertGreaterThan(0, $result);
@@ -55,14 +55,13 @@ class DocumentTest extends PHPUnit_Framework_TestCase
 {
 	public static function setUpBeforeClass()
     {
-        $nano = new Nano('http://localhost:5984');
+        $nano = new Nano(DB);
         $nano->db->create('alice');
         $nano->db->create('alien');
     }
 
-
 	public function testUse(){
-		$nano = new Nano('http://localhost:5984');
+		$nano = new Nano(DB);
 		$alice = $nano->use('alice');
 		$alien = $nano->use('alien');
 		$alien->insert(array('character'=>'Queen'));
@@ -70,17 +69,15 @@ class DocumentTest extends PHPUnit_Framework_TestCase
 	}
 
 	public function testScope(){
-		$nano = new Nano('http://localhost:5984');
+		$nano = new Nano(DB);
 		$alice = $nano->scope('alice');
 		$alien = $nano->scope('alien');
 		$alien->insert(array('character'=>'Rippley'));
 		$alice->insert(array('character'=>'The Hatter'));
 	}
 
-
-    public function testDocumentOperations()
-	{
-		$nano = new Nano('http://localhost:5984');
+	public function testInsert(){
+		$nano = new Nano(DB);
 		$alice = $nano->use('alice');
 		$this->assertInstanceOf('\Nano\NanoDocument', $alice, 'Cannot select alice for DB');
 		$result = $alice->insert(array('crazy'=>true), 'rabbit');
@@ -92,6 +89,12 @@ class DocumentTest extends PHPUnit_Framework_TestCase
 		$alice->insert(array('character'=>'Caterpillar'));
 		$alice->insert(array('character'=>'Cheshire Cat'));
 		$alice->insert(array('character'=>'Queen of Hearts'));
+	}
+
+    public function testView()
+	{
+		$nano = new Nano(DB);
+		$alice = $nano->use('alice');
 
 		$alice->insert(array('language'=>'javascript', 'views' => array('list'=>array('map'=>'function(doc) {  if(doc.character != null)   emit(doc.character, doc.character); }'))),'_design/characters');
 
@@ -104,9 +107,51 @@ class DocumentTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($result->rows[0]->key == 'Queen of Hearts', 'Something is wrong this action should return the Queen of Hearts');
 	}
 
+	public function testHead(){
+		$nano = new Nano(DB);
+		$alien = $nano->use('alien');
+		$alien->insert(array('character'=>'Hudson'), 'Hudson');
+
+		$result = $alien->head('Hudson');
+		$result = count($result);
+		$this->assertGreaterThan(0, $result);
+	}
+
+	public function testCopy(){
+		$nano = new Nano(DB);
+		$alien = $nano->use('alien');
+		$alien->insert(array('character'=>'Rippley'));
+
+		// Normal copy
+		$alien->insert(array('language'=>'javascript', 'views' => array('list'=>array('map'=>'function(doc) {  if(doc.character != null)   emit(doc.character, doc); }'))),'_design/characters');
+
+		$result = $alien->view('characters', 'list', array('key'=>'Rippley'));
+
+		$alien->copy($result->rows[0]->value->_id, 'Rippley');
+
+		$rs = $alien->get('Rippley');
+		$this->assertFalse(isset($rs->error));
+
+		// With overwrite option
+		$rs = $alien->copy($result->rows[0]->value->_id, 'Rippley', array('overwrite'=>true));
+		//print_r($rs);
+		$this->assertFalse(isset($rs->error));
+	}
+
+	public function testGet(){
+		// Test if get just one key
+
+		$nano = new Nano(DB);
+		$alien = $nano->use('alien');
+
+		$rs = $alien->get('Hudson');
+
+		//$this->assertTrue();
+	}
+
     public static function tearDownAfterClass()
     {
-    	$nano = new Nano('http://localhost:5984');
+    	$nano = new Nano(DB);
      	$nano->db->destroy('alice');
      	$nano->db->destroy('alien');
     }

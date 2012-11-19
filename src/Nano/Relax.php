@@ -19,7 +19,7 @@ class Relax{
 		} else if(isset($opts->doc)){
 			// not a design document
 			if(!preg_match('/^_design/', $opts->doc)){
-				$path .= '/'.urlencode(json_encode($opts->doc));
+				$path .= '/'.urlencode($opts->doc);
 			} else {
 				// design document
 				$path .= '/'.$opts->doc;
@@ -64,17 +64,58 @@ class Relax{
 		// This is the REQUEST -> PUT, GET, DELETE...
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $opts->method);
 
-		$this->value = curl_exec($ch);
-		$this->original_message = $this->value;
-		$this->value = json_decode($this->value);
-		$this->headers = curl_getinfo($ch);
+		//curl_setopt($ch, CURLOPT_VERBOSE, true);
+		curl_setopt($ch, CURLOPT_HEADER, true);
+
+		// We generate the Headers that comes in the $opts var
+		if($opts->headers){
+			$headers = array();
+			foreach($opts->headers as $header => $value){
+				array_push($headers, $header.': '.$value);
+			}
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		}
+
+		// Executing cURL
+		$response = curl_exec($ch);
+
+		// Splitting header and body in two separate vars
+		$header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+		$header = substr($response, 0, $header_size);
+		$body = substr($response, $header_size);
+
+		// Parsing headers
+		$this->parse_headers($header);
+		// This is what will be returned
+		$this->value = json_decode($body);
 
 		curl_close($ch);
 	}
 
 	public function exec(){
 		// This will map the result as PHP object so you can work directly with it (Just like in .js)
-		$return = json_decode($this->original_message);
+		$return = $this->value;
 		return $return;
+	}
+
+	// This method is prepared to parse the headers from the CouchDB response
+	private function parse_headers($header){
+
+		$this->headers = array();
+		foreach (explode("\r\n", $header) as $i => $line){
+	        if ($i === 0)
+	            $this->headers['http_code'] = $line;
+	        else
+	        {
+	        	$t = explode(': ', $line);
+	        	if(count($t) == 2){
+		            list($key, $value) = $t;
+		            $this->headers[$key] = $value;
+	        	}
+	        }
+	    }
+
+	    // Just for the record
+	    return true;
 	}
 }

@@ -54,13 +54,53 @@ class NanoDocument{
 		return $relax->exec();
 	}
 	
-	function get($doc_name, $params){
+	function get($doc_name, $params = false){
 		//return relax({ db: db_name, doc: doc_name, method: "GET", params: params }, callback);
+		$opts = new OptionsClass();
+		$opts->db = $this->nano->config->db;
+		$opts->doc = $doc_name;
+		$opts->method = 'GET';
+		if($params)
+			$opts->params = $params;
+
+		$relax = new Relax($opts, $this->nano);
+		return $relax->exec();
 	}
 
-	function head(){}
+	function head($doc_name){
+		$opts = new OptionsClass();
+		$opts->db = $this->nano->config->db;
+		$opts->doc = $doc_name;
+		$opts->method = 'GET'; // Here the method should be HEAD but It's to slow dont know why...
 
-	function copy(){}
+		$relax = new Relax($opts, $this->nano);
+		$return = $relax->exec();
+
+		return Nano::arrayToObject($relax->headers);
+	}
+
+	function copy($doc_src, $doc_dest, $opts = false){
+
+		$opts_r = new OptionsClass();
+		$opts_r->db = $this->nano->config->db;
+		$opts_r->doc = $doc_src;
+		$opts_r->method = 'COPY';
+		$opts_r->headers = array('Destination'=>$doc_dest);
+
+		if($opts){
+			if(is_array($opts))
+				$opts = Nano::arrayToObject($opts);
+
+			if($opts->overwrite){
+				$h = $this->head($doc_dest);
+				$opts_r->headers['Destination'] .= '?rev='.str_replace('"','', $h->etag);
+			}
+		}
+
+		$relax = new Relax($opts_r, $this->nano);
+		return $relax->exec();
+
+	}
 
 	function bulk(){}
 
