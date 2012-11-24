@@ -30,7 +30,7 @@ There's still a lot of work to be done here.
 
 ## installation
 
-### Composer way
+### Composer way [HIGHLY RECOMMENDED]
 1. install [Composer][1]
 2. create a file called composer.json in your project folder add {} inside
 3. `composer require`
@@ -43,7 +43,8 @@ There's still a lot of work to be done here.
 1. Clone or download this repo
 2. Copy the src folder where you want or call as you wish.
 3. Include or require Nano.php
-4. Enjoy
+4. You need the Guzzle library
+5. Enjoy
 
 Are any of this installation methods bad? Add an issue if you encounter any problems.
 
