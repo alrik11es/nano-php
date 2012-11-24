@@ -113,8 +113,7 @@ class DocumentTest extends PHPUnit_Framework_TestCase
 		$alien->insert(array('character'=>'Hudson'), 'Hudson');
 
 		$result = $alien->head('Hudson');
-		$result = count($result);
-		$this->assertGreaterThan(0, $result);
+		$this->assertTrue(is_string($result->getEtag()), 'Cannot get the Etag');
 	}
 
 	public function testCopy(){

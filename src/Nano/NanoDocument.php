@@ -71,12 +71,12 @@ class NanoDocument{
 		$opts = new OptionsClass();
 		$opts->db = $this->nano->config->db;
 		$opts->doc = $doc_name;
-		$opts->method = 'GET'; // Here the method should be HEAD but It's to slow dont know why...
+		$opts->method = 'HEAD'; // Here the method should be HEAD but It's to slow dont know why...
 
 		$relax = new Relax($opts, $this->nano);
 		$return = $relax->exec();
 
-		return Nano::arrayToObject($relax->headers);
+		return $relax->response;
 	}
 
 	function copy($doc_src, $doc_dest, $opts = false){
@@ -92,8 +92,8 @@ class NanoDocument{
 				$opts = Nano::arrayToObject($opts);
 
 			if($opts->overwrite){
-				$h = $this->head($doc_dest);
-				$opts_r->headers['Destination'] .= '?rev='.str_replace('"','', $h->etag);
+				$r = $this->head($doc_dest);
+				$opts_r->headers['Destination'] .= '?rev='.str_replace('"','', $r->getEtag());
 			}
 		}
 
