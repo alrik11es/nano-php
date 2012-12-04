@@ -38,8 +38,26 @@ class Relax{
 		// This maps the params that you request adding them to the query
 		if(isset($opts->params) && (is_object($opts->params) || is_array($opts->params))){
 			$path .= '?';
+			
+			/*reset($opts->params);
+			for($i=0; $i<=count($opts->params); $i++){
+				$key = key($opts->params);
+				var_dump($key);
+				$path .= $key.'='.urlencode(json_encode($opts->params[$key]));
+
+				if($i<count($opts->params))
+					$path .= '&';
+
+				next($opts->params);
+			}*/
+
+			$i = 0; 
+			$total = count($opts->params)-1;
 			foreach($opts->params as $key => $value){
 				$path .= $key.'='.urlencode(json_encode($value));
+				if($i<$total)
+					$path .= '&';
+				$i++;
 			}
 		}
 

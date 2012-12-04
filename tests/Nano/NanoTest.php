@@ -105,6 +105,9 @@ class DocumentTest extends PHPUnit_Framework_TestCase
 		// Show only the Queen of Hearts
 		$result = $alice->view('characters', 'list', array('key'=>'Queen of Hearts'));
 		$this->assertTrue($result->rows[0]->key == 'Queen of Hearts', 'Something is wrong this action should return the Queen of Hearts');
+
+		$result = $alice->view('characters', 'list', array('skip'=>0,'limit'=>30));
+		$this->assertFalse(isset($result->error));
 	}
 
 	public function testHead(){
