@@ -39,18 +39,6 @@ class Relax{
 		if(isset($opts->params) && (is_object($opts->params) || is_array($opts->params))){
 			$path .= '?';
 			
-			/*reset($opts->params);
-			for($i=0; $i<=count($opts->params); $i++){
-				$key = key($opts->params);
-				var_dump($key);
-				$path .= $key.'='.urlencode(json_encode($opts->params[$key]));
-
-				if($i<count($opts->params))
-					$path .= '&';
-
-				next($opts->params);
-			}*/
-
 			$i = 0; 
 			$total = count($opts->params)-1;
 			foreach($opts->params as $key => $value){
@@ -66,7 +54,7 @@ class Relax{
 		$client = new Client($this->nano->config->url.'/', array(
 			    'curl.options' => array(
 			        //CURLOPT_PROXY    => '127.0.0.1:8888',
-			        CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+			        CURLOPT_HTTPHEADER => array('Content-Type: application/json', 'Expect:'),
 			    )
 			));
 
