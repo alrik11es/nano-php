@@ -4,12 +4,7 @@
     <testsuites>
         <testsuite name="NanoPHP Test Suite">
             <directory suffix='.php'>tests/Nano/</directory>
+            <directory suffix=".php">vendor/</directory>
         </testsuite>
     </testsuites>
-
-    <filter>
-        <whitelist>
-            <directory suffix=".php">src/Nano/</directory>
-        </whitelist>
-    </filter>
 </phpunit>

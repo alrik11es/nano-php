@@ -10,7 +10,12 @@ class NanoDB{
 		$this->nano = $nano;
 	}
 
-	function create($db_name){
+    /**
+     * Creates a given $db_name on the CouchDB server.
+     * @param $db_name
+     * @return mixed
+     */
+    function create($db_name){
 
 		if(!is_string($db_name))
 			trigger_error("Multiple databases at same time not allowed for creation. (String needed)", E_USER_ERROR);
@@ -23,7 +28,12 @@ class NanoDB{
 		return $relax->exec();
 	}
 
-	function get($db_name){
+    /**
+     * Gets the info from a database.
+     * @param string $db_name
+     * @return mixed
+     */
+    function get($db_name){
 
 		if(!is_string($db_name))
 			trigger_error("You can only get info of one DB. (String needed)", E_USER_ERROR);
@@ -36,10 +46,12 @@ class NanoDB{
 		return $relax->exec();
 	}
 
-	/**
-	 *	Destroys $db_name
-	 **/
-	function destroy($db_name){
+    /**
+     * Destroys the selected DB.
+     * @param string $db_name
+     * @return mixed
+     */
+    function destroy($db_name){
 
 		if(!is_string($db_name))
 			trigger_error("You cannot destroy multiple databases with the same command. (String needed)", E_USER_ERROR);

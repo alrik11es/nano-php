@@ -48,9 +48,9 @@ class Nano{
 
         //create an instance of an class without calling class's constructor
         $object = unserialize(
-                sprintf(
-                        'O:%d:"%s":0:{}', strlen($class), $class
-                )
+            sprintf(
+                'O:%d:"%s":0:{}', strlen($class), $class
+            )
         );
 
         if (is_array($array) && count($array) > 0) {
@@ -58,19 +58,19 @@ class Nano{
                 $name = strtolower(trim($name));
                 if (!empty($name)) {
 
-                    if(method_exists($object, 'set'.$name)){
-                        $object->{'set'.$name}(Nano::arrayToObject($value));
-                    }else{
-                        if(($strict)){
+                    if (method_exists($object, 'set' . $name)) {
+                        $object->{'set' . $name}(Nano::arrayToObject($value));
+                    } else {
+                        if (($strict)) {
 
-                            if(property_exists($class, $name)){
+                            if (property_exists($class, $name)) {
 
-                                $object->$name = Nano::arrayToObject($value); 
+                                $object->$name = Nano::arrayToObject($value);
 
                             }
 
-                        }else{
-                            $object->$name = Nano::arrayToObject($value); 
+                        } else {
+                            $object->$name = Nano::arrayToObject($value);
                         }
 
                     }
