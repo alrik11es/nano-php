@@ -5,7 +5,7 @@ v0.1
 
 minimalistic couchdb driver for PHP >5.3 it's intended to be exactly the same as
 https://github.com/dscape/nano but in PHP (I'm avoiding the use of callbacks because
-I think PHP people doesn't need to mess with that).
+I think PHP people don't really need to mess with that).
 
 `nano-php` features:
 
