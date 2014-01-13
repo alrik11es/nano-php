@@ -3,10 +3,10 @@
 
 namespace Nano;
 
-require_once 'NanoDocument.php';
-require_once 'NanoDB.php';
-require_once 'Relax.php';
-require_once 'OptionsClass.php';
+require_once __DIR__ . '/NanoDocument.php';
+require_once __DIR__ . '/NanoDB.php';
+require_once __DIR__ . '/Relax.php';
+require_once __DIR__ . '/OptionsClass.php';
 
 
 class Nano{
